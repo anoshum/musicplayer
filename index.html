@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Streaming App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Music Streaming App</h1>
+        <div class="player">
+            <h2 id="song-title">Song 1</h2>
+            <p id="artist-name">Artist 1</p>
+            <audio id="audio-player" src="songs/song1.mp3"></audio>
+
+            <div class="controls">
+                <button id="prev-btn">⏮</button>
+                <button id="play-pause-btn">▶</button>
+                <button id="next-btn">⏭</button>
+            </div>
+
+            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
