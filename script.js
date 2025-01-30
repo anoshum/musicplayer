@@ -1,6 +1,10 @@
 const songs = [
     { title: "Song 1", artist: "Artist 1", src: "songs/song1.mp3" },
-    { title: "Song 2", artist: "Artist 2", src: "songs/song2.mp3" },
+    { title: "Hamari Adhuri Kahani", artist: "Artist 2", src: "songs/Hamari Adhuri Kahani.mp3" },
+    { title: "Song 3", artist: "Artist 3", src: "songs/song3.mp3" },
+    { title: "Song 3", artist: "Artist 3", src: "songs/song3.mp3" },
+    { title: "Song 3", artist: "Artist 3", src: "songs/song3.mp3" },
+    { title: "Song 3", artist: "Artist 3", src: "songs/song3.mp3" },
     { title: "Song 3", artist: "Artist 3", src: "songs/song3.mp3" }
 ];
 
@@ -12,14 +16,42 @@ const nextBtn = document.getElementById("next-btn");
 const volumeSlider = document.getElementById("volume-slider");
 const songTitle = document.getElementById("song-title");
 const artistName = document.getElementById("artist-name");
+const progressBar = document.getElementById("progress-bar");
+const currentTimeDisplay = document.getElementById("current-time");
+const totalDurationDisplay = document.getElementById("total-duration");
 
 function updateSongDetails() {
     songTitle.innerText = songs[currentSongIndex].title;
     artistName.innerText = songs[currentSongIndex].artist;
     audioPlayer.src = songs[currentSongIndex].src;
+    audioPlayer.play();
+    playPauseBtn.innerText = "⏸";
 }
 
-// Function to toggle play/pause
+// Convert seconds to MM:SS format
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+}
+
+// Update progress bar and time
+audioPlayer.addEventListener("timeupdate", () => {
+    progressBar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    currentTimeDisplay.innerText = formatTime(audioPlayer.currentTime);
+});
+
+// Set total duration once metadata loads
+audioPlayer.addEventListener("loadedmetadata", () => {
+    totalDurationDisplay.innerText = formatTime(audioPlayer.duration);
+});
+
+// Seek music when progress bar is changed
+progressBar.addEventListener("input", () => {
+    audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration;
+});
+
+// Toggle Play/Pause
 function togglePlayPause() {
     if (audioPlayer.paused) {
         audioPlayer.play();
@@ -34,15 +66,11 @@ function togglePlayPause() {
 function nextSong() {
     currentSongIndex = (currentSongIndex + 1) % songs.length;
     updateSongDetails();
-    audioPlayer.play();
-    playPauseBtn.innerText = "⏸";
 }
 
 function prevSong() {
     currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     updateSongDetails();
-    audioPlayer.play();
-    playPauseBtn.innerText = "⏸";
 }
 
 // Maintain playback when the screen is off or the tab is hidden
