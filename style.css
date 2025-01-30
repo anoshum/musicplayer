@@ -24,6 +24,19 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Progress Bar */
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+#progress-bar {
+    flex: 1;
+    margin: 0 10px;
+}
+
 .controls {
     display: flex;
     justify-content: center;
